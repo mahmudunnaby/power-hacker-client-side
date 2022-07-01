@@ -20,6 +20,9 @@ const Layout = () => {
         return <Loading></Loading>
     }
     console.log(bills);
+    const addNewBill = () => {
+        setEdit(' ')
+    }
     return (
         <div className='container mx-auto p-10'>
 
@@ -28,7 +31,7 @@ const Layout = () => {
                     <h5 className='self-cente mx-4 font-semibold text-white'>Billing</h5>
                     <input type="text" placeholder="Search" className="input input-bordered input-info w-full max-w-xs" />
                 </div>
-                <button className="btn btn-xs mx-4 btn-success">Add New Bill</button>
+                <label onClick={addNewBill} for="submission-modal" class="btn btn-xs mx-4 btn-success">Add New Bill</label>
             </div>
 
             <div className="overflow-x-auto mt-4">
