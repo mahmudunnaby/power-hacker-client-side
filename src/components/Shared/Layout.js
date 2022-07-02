@@ -23,13 +23,10 @@ const Layout = () => {
 
     // )
 
-
-
-
-
     // if (isLoading) {
     //     return <Loading></Loading>
     // }
+
     console.log(bills);
 
     const addNewBill = () => {
