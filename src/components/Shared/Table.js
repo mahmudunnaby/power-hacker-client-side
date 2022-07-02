@@ -1,6 +1,24 @@
 import React from 'react';
 
-const Table = ({ bills, setEdit }) => {
+const Table = ({ bills, setBills, setEdit }) => {
+    const handleDelete = (id) => {
+        const proceed = window.confirm('Are you sure you want to delete this item ?')
+        if (proceed) {
+            console.log(id, 'delete')
+            const url = `http://localhost:5000/delete-billing/${id}`
+            fetch(url, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount > 0) {
+                        console.log('deleted')
+                        const remaining = bills.filter(bill => bill._id !== id)
+                        setBills(remaining)
+                    }
+                })
+        }
+    }
     return (
         <table className="table table-compact w-full">
             <thead>
@@ -24,7 +42,7 @@ const Table = ({ bills, setEdit }) => {
                             <td>{bill.phone}</td>
                             <td>{bill.paid}</td>
                             <td><label onClick={() => setEdit(bill)} for="submission-modal" class="btn btn-xs mx-2">Edit</label>
-                                <button class="btn btn-xs mx-2 btn-outline btn-error">Delete</button></td>
+                                <button onClick={() => handleDelete(bill._id)} class="btn btn-xs mx-2 btn-outline btn-error">Delete</button></td>
                         </tr>
                     })
                 }

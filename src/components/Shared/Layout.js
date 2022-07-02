@@ -36,6 +36,7 @@ const Layout = () => {
         setEdit(' ')
     }
 
+
     return (
         <div className='container mx-auto p-10'>
 
@@ -48,7 +49,7 @@ const Layout = () => {
             </div>
 
             <div className="overflow-x-auto mt-4">
-                <Table key={bills._id} bills={bills} setEdit={setEdit}  ></Table>
+                <Table key={bills._id} bills={bills} setBills={setBills} setEdit={setEdit}  ></Table>
             </div>
             {edit && <SubmissionModal edit={edit} setEdit={setEdit} ></SubmissionModal>}
         </div>

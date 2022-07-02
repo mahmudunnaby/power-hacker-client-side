@@ -8,6 +8,8 @@ const SubmissionModal = ({ edit, setEdit }) => {
     const { fullname, _id } = edit
     const { register, formState: { errors }, handleSubmit } = useForm();
 
+
+
     const onSubmit = data => {
         console.log(data)
 
@@ -62,6 +64,7 @@ const SubmissionModal = ({ edit, setEdit }) => {
     }
     return (
         <div>
+
 
             <input type="checkbox" id="submission-modal" className="modal-toggle" />
 
