@@ -83,7 +83,7 @@ const SubmissionModal = ({ edit, setEdit }) => {
                                     message: 'Fullname is required'
                                 },
                                 minLength: {
-                                    value: 4,
+                                    value: 2,
                                     message: 'Please Provide Fullname'
                                 }
                             })}

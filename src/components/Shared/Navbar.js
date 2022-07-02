@@ -26,7 +26,7 @@ const Navbar = () => {
     useEffect(() => {
         let s = 0;
         for (const amount of amounts) {
-            s += parseInt(amount.paid)
+            s += parseInt(amount?.paid)
         }
         setTotal(s)
     }, [amounts])

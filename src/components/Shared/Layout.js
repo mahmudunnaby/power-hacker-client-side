@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import styles from './Layout.css'
 import Loading from './Loading';
+import Pagination from './Pagination';
 import SubmissionModal from './SubmissionModal';
 import Table from './Table';
 
@@ -9,6 +10,8 @@ const Layout = () => {
 
     const [edit, setEdit] = useState(null)
     const [bills, setBills] = useState([])
+
+
 
     useEffect(() => {
         fetch('http://localhost:5000/billing-list')
@@ -46,7 +49,7 @@ const Layout = () => {
             </div>
 
             <div className="overflow-x-auto mt-4">
-                <Table key={bills._id} bills={bills} setBills={setBills} setEdit={setEdit}  ></Table>
+                <Table key={bills._id} setBills={setBills} setEdit={setEdit} bills={bills}  ></Table>
             </div>
             {edit && <SubmissionModal edit={edit} setEdit={setEdit} ></SubmissionModal>}
         </div>
