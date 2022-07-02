@@ -47,6 +47,7 @@ const SubmissionModal = ({ edit, setEdit }) => {
                     console.log(data)
 
                     toast("Bill Added")
+                    setEdit(newBill)
                 })
         }
 

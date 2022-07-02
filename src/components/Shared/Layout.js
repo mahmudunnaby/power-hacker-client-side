@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import styles from './Layout.css'
 import Loading from './Loading';
@@ -8,17 +8,28 @@ import Table from './Table';
 const Layout = () => {
 
     const [edit, setEdit] = useState(null)
+    const [bills, setBills] = useState([])
 
-    const { isLoading, error, data: bills } = useQuery('bills', () =>
-        fetch('http://localhost:5000/billing-list').then(res =>
-            res.json()
-        )
-    )
+    useEffect(() => {
+        fetch('http://localhost:5000/billing-list')
+            .then(res => res.json())
+            .then(data => setBills(data))
+    }, [edit])
+
+    // const { isLoading, error, data: bills, } = useQuery('bills', () =>
+    //     fetch('http://localhost:5000/billing-list').then(res =>
+    //         res.json()
+    //     ),
+
+    // )
 
 
-    if (isLoading) {
-        return <Loading></Loading>
-    }
+
+
+
+    // if (isLoading) {
+    //     return <Loading></Loading>
+    // }
     console.log(bills);
 
     const addNewBill = () => {
@@ -37,7 +48,7 @@ const Layout = () => {
             </div>
 
             <div className="overflow-x-auto mt-4">
-                <Table key={bills._id} bills={bills} setEdit={setEdit} ></Table>
+                <Table key={bills._id} bills={bills} setEdit={setEdit}  ></Table>
             </div>
             {edit && <SubmissionModal edit={edit} setEdit={setEdit} ></SubmissionModal>}
         </div>
