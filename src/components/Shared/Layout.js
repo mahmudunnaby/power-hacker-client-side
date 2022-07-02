@@ -10,7 +10,7 @@ const Layout = () => {
     const [edit, setEdit] = useState(null)
 
     const { isLoading, error, data: bills } = useQuery('bills', () =>
-        fetch('bill.json').then(res =>
+        fetch('http://localhost:5000/billing-list').then(res =>
             res.json()
         )
     )
@@ -20,9 +20,11 @@ const Layout = () => {
         return <Loading></Loading>
     }
     console.log(bills);
+
     const addNewBill = () => {
         setEdit(' ')
     }
+
     return (
         <div className='container mx-auto p-10'>
 
@@ -37,7 +39,7 @@ const Layout = () => {
             <div className="overflow-x-auto mt-4">
                 <Table key={bills._id} bills={bills} setEdit={setEdit} ></Table>
             </div>
-            {edit && <SubmissionModal edit={edit} ></SubmissionModal>}
+            {edit && <SubmissionModal edit={edit} setEdit={setEdit} ></SubmissionModal>}
         </div>
     );
 };

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const SubmissionModal = ({ edit }) => {
+const SubmissionModal = ({ edit, setEdit }) => {
 
     const { fullname, _id } = edit
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -13,22 +13,48 @@ const SubmissionModal = ({ edit }) => {
 
         const newBill = data
 
-        fetch('http://localhost:5000/add-billing', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newBill),
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
+        if (_id) {
 
-                toast("Bill Added")
+            fetch(`http://localhost:5000/update-billing/${_id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newBill),
             })
 
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    if (data.modifiedCount > 0) {
+                        toast("Updated")
+                        setEdit(newBill)
+                    }
 
-        console.log(newBill);
+                })
+
+        }
+        else {
+            fetch('http://localhost:5000/add-billing', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newBill),
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+
+                    toast("Bill Added")
+                })
+        }
+
+
+
+
+
+
 
 
 
@@ -96,13 +122,13 @@ const SubmissionModal = ({ edit }) => {
                         </label>
 
                         <input
-                            {...register("amount", {
+                            {...register("paid", {
                                 required: {
                                     value: true,
                                     message: 'Paid Amount is required'
                                 },
                             })}
-                            name='amount' type="number" placeholder="Paid Amount" required className="input input-bordered w-full max-w-xs m-1" />
+                            name='paid' type="number" placeholder="Paid Amount" required className="input input-bordered w-full max-w-xs m-1" />
 
                         <div className="flex justify-center">
                             <input type="submit" value='submit' className='btn btn-outline btn-success mt-1' />
