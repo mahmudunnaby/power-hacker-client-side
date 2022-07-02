@@ -1,5 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SubmissionModal = ({ edit }) => {
 
@@ -8,6 +10,28 @@ const SubmissionModal = ({ edit }) => {
 
     const onSubmit = data => {
         console.log(data)
+
+        const newBill = data
+
+        fetch('http://localhost:5000/add-billing', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newBill),
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+
+                toast("Bill Added")
+            })
+
+
+        console.log(newBill);
+
+
+
     }
     return (
         <div>
@@ -22,7 +46,20 @@ const SubmissionModal = ({ edit }) => {
 
                     <form onSubmit={handleSubmit(onSubmit)}>
 
-                        <input name='fullname' type="text" placeholder="Full Name" className="input input-bordered w-full max-w-xs m-1" />
+                        <input
+                            {...register("fullname", {
+                                required: {
+                                    value: true,
+                                    message: 'Fullname is required'
+                                },
+                                minLength: {
+                                    value: 4,
+                                    message: 'Please Provide Fullname'
+                                }
+                            })}
+                            name='fullname' required type="text" placeholder="Full Name" className="input input-bordered w-full max-w-xs m-1" />
+
+                        <ToastContainer></ToastContainer>
 
                         <input
                             {...register("email", {
@@ -57,7 +94,15 @@ const SubmissionModal = ({ edit }) => {
                             {errors.phone?.type === 'required' && <span className="label-text-alt  text-red-600">{errors.phone.message}</span>}
                             {errors.phone?.type === 'minLength' && <span className="label-text-alt  text-red-600">{errors.phone.message}</span>}
                         </label>
-                        <input name='amount' type="number" placeholder="Paid Amount" required className="input input-bordered w-full max-w-xs m-1" />
+
+                        <input
+                            {...register("amount", {
+                                required: {
+                                    value: true,
+                                    message: 'Paid Amount is required'
+                                },
+                            })}
+                            name='amount' type="number" placeholder="Paid Amount" required className="input input-bordered w-full max-w-xs m-1" />
 
                         <div className="flex justify-center">
                             <input type="submit" value='submit' className='btn btn-outline btn-success mt-1' />
